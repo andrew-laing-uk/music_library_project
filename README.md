@@ -30,9 +30,9 @@ There are two videos to support:
 # Read below if you see an error with `python_full_version`
 
 # Create the database
-(databases-starter-venv); createdb YOUR_PROJECT_NAME
+(databases-starter-venv); createdb music_library_project
 
-# Open lib/database_connection.py and change the database name to YOUR_PROJECT_NAME
+# Open lib/database_connection.py and change the database name to music_library_project
 (databases-starter-venv); open lib/database_connection.py
 
 # Run the tests
