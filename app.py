@@ -21,7 +21,6 @@ for artist in artists:
 album_repository = AlbumRepository(connection)
 albums = album_repository.all()
 
-
 # List them out
 for album in albums:
     print(album)
