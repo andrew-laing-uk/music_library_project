@@ -1,22 +1,44 @@
-from lib.database_connection import DatabaseConnection
+# file: app.py
+
 from lib.artist_repository import ArtistRepository
 from lib.album_repository import AlbumRepository
+from lib.database_connection import DatabaseConnection
 
-# Connect to the database
-connection = DatabaseConnection()
-connection.connect()
+class Application():
+    def __init__(self):
+        self._connection = DatabaseConnection()
+        self._connection.connect()
+        self._connection.seed("seeds/music_library.sql")
 
-# Seed with some seed data
-connection.seed("seeds/music_library.sql")
+    def print_all_album_titles(self):
+        album_repository = AlbumRepository(self._connection)
+        albums = album_repository.all()
+        for album in albums:
+            print(f" * {album.id} - {album.title}")
 
-# Retrieve all albums
-album_repository = AlbumRepository(connection)
-albums = album_repository.all()
+    def print_all_artist_names(self):
+        artist_repository = ArtistRepository(self._connection)
+        artists = artist_repository.all()
+        for artist in artists:
+            print(f" * {artist.id} - {artist.name}")
 
-# List them out
-for album in albums:
-    print(album)
+    def run(self):
+        print('Welcome to the music library manager!\n')
+        print('What would you like to do?')
+        print(' 1 - List all albums')
+        print(' 2 - List all artists\n')
 
-# Retrieve the album with id 1
-album_1 = album_repository.find(1)
-print(f"\nThe album with id 1 is {album_1}")
+        while True:
+            n = input('Enter your choice: ')
+            if n == '1':
+                self.print_all_album_titles()
+                break
+            elif n == '2':
+                self.print_all_artist_names()
+                break
+            else:
+                print(f"Error: invalid choice '{n}'")
+
+if __name__ == '__main__':
+    app = Application()
+    app.run()
